@@ -29,7 +29,7 @@ module.exports = class YamlFormats
 
       return null
 
-    for key, value of data when typeof data is 'object'
+    for key, value of data when typeof value is 'object'
       data[key] = if value["#{format}!"]
         if value["#{format}!"] is 'object'
           @resolveFormats(value["#{format}!"], parent, format)

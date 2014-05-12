@@ -1,6 +1,6 @@
 {
   "name": "justjaded",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Static Site Generator",
   "repository": "http://github.com/KellyLSB/JustJaded.git",
   "main": "index.coffee",

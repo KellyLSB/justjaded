@@ -31,7 +31,8 @@ module.exports = class File
       Fs.readFileSync(file, 'utf8')
     else false
 
-  @ext: (file) -> @type(file)
+  @ext: (file) ->
+    @type(file)
 
   @type: (file) ->
     ext = Path.extname(file)
@@ -43,3 +44,6 @@ module.exports = class File
   @fullname: (from, to, base) ->
     file = @relative(from, to, base)
     file.replace(/\.[\w\d]*$/, '')
+
+  @dirname: (file) ->
+    Path.dirname(file)

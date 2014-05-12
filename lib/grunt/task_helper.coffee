@@ -32,9 +32,12 @@ module.exports = class GruntTaskHelper
         name: File.fullname($.options.buildDir, f.dest)
         path: File.resolve(f.dest, $.options.buildDir)
 
-      # Destination File path relative to the project root
+      # Destination File Path relative to the project root
       dest.relative =
         File.relative($._.projectRoot, dest.path)
+
+      # Destination File Directory
+      dest.dir = File.dirname(dest.path)
 
       # Remove any sources that do not exist and loop.
       f.src.filter($.filterFileNotExist())
@@ -54,6 +57,9 @@ module.exports = class GruntTaskHelper
         # Source File path relative to the project root
         file.relative =
           File.relative($._.projectRoot, file.path)
+
+        # Source File Directory
+        file.dir = File.dirname(file.path)
 
         # Process file and push output
         try

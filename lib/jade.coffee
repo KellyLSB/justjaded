@@ -37,17 +37,16 @@ module.exports = $ = class Jade
        !(data instanceof Array)
       Extend(@jadeData, data)
 
-    # Extend additional data in
-    # from Yaml or other sources
-    Extend(@jadeData, extraData...)
+    # Extend additional data in from Yaml or other sources
+    Extend(@jadeData, extra) for extra in extraData
 
     # Build Config Hash
-    Extend @jadeData, $:
+    @jadeData.config =
 
       # AssetDir relative to
       # Destination File
       assetDir:
-        File.relative dest.path,
+        File.relative dest.dir,
         options.assetDir,
         options.buildDir
 

@@ -5,22 +5,20 @@
 # Licensed under the MIT license.
 'use strict'
 
-$ = class YamlTrimHelpers
-  
-  @null: (data) -> typeof data is 'undefined' || data is null
-  @empty: (data) -> @null(data) || data.length < 1
-  @object: (data) -> typeof data is 'object'
-
 module.exports = class YamlTrim
 
   @resolveTrim: (data, parent) ->
+    isArray = data instanceof Array
+    delKeys = []
+
     for key, value of data
+      if typeof value is 'object'
+        data[key] = @resolveTrim(value, parent)
+      if data[key] is null || value is null
+        delKeys.push(key)
 
-      if $.object(value)
-        data[key] = value = @resolveTrim(value, parent)
-
-      if $.null(value)
-        if data instanceof Array then data.splice(key, 1)
-        else delete data[key]
+    for key in delKeys.sort((a,b) -> b-a)
+      if isArray then data.splice(key, 1)
+      else delete data[key]
 
     return data
