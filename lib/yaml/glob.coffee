@@ -12,7 +12,8 @@ Fs   = require('fs')
 # Required Lib.
 Glob = require('glob')
 
-class YamlGlobHelpers
+$ = class YamlGlobHelpers
+
   @resolveGlob: (pattern, parent) ->
     pattern = if parent
       root = Path.dirname(parent)
@@ -31,6 +32,6 @@ module.exports = class YamlGlob
     @loadGlob(pattern, parent)
 
   @loadGlob: (pattern, parent) ->
-    files = YamlGlobHelpers.resolveGlob(pattern, parent)
+    files = $.resolveGlob(pattern, parent)
     (@loadFile(f) for f in files).filter (d) ->
       !(d is undefined || d is null)

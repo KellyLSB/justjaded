@@ -5,7 +5,8 @@
 # Licensed under the MIT license.
 'use strict'
 
-class YamlFormatsHelpers
+$ = class YamlFormatsHelpers
+
   @except: (data, format) ->
     if typeof data is 'object' && !(typeof data['except!'] is 'undefined')
       !(format is data['except!'] || format in data['except!'])
@@ -23,8 +24,8 @@ module.exports = class YamlFormats
     format ||= data['format!']
     if ! format then return data
 
-    unless YamlFormatsHelpers.only(data, format) && \
-           YamlFormatsHelpers.except(data, format)
+    unless $.only(data, format) && \
+           $.except(data, format)
 
       return null
 

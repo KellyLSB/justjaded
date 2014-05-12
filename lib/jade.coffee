@@ -13,37 +13,60 @@ Chalk           = require('chalk')
 Jade            = require('jade')
 
 # Local Lib.
-Module          = require('./module')
 File            = require('./file')
 
-module.exports = class Jade extends Module
+module.exports = $ = class Jade
+  @setGrunt: (@grunt) -> @
+
 
   @init: (@jade) ->
     @jade ||= require('jade')
     JadeGlobInclude.patch(@jade)
 
 
-  @jadeData: (args) ->
-    data = args['options'].jadeData
-    if data is 'function'
-      data = data.call(@, args['file'], args['dest'])
-    if ! data is 'object' then data = {}
-    @jadeData = Merge(data, args['data']...)
+  @prep: (options, file, dest, extraData...) ->
+    data = options.jadeData
+    @jadeData = {}
 
+    # If data is a function call it on @jadeData
+    if data && typeof data is 'function'
+      data = data.call(@jadeData, file, dest)
 
-  @jadeFilters: (options) ->
-    if options.jadeFilters
-      for filter, func of options.jadeFilters
-        @jade.filters[filter] = func.bind(@)
+    # If the data is an object (not an Array) push the data on
+    if data && typeof data is 'object' && \
+       !(data instanceof Array)
+      Extend(@jadeData, data)
 
+    # Extend additional data in
+    # from Yaml or other sources
+    Extend(@jadeData, extraData...)
 
-  @jadeOptions: (args) ->
-    options = args['options']
+    # Build Config Hash
+    Extend @jadeData, $:
 
-    if typeof options.jadeInit is 'function'
-      options.jadeInit.call(@jadeData)
+      # AssetDir relative to
+      # Destination File
+      assetDir:
+        File.relative dest.path,
+        options.assetDir,
+        options.buildDir
 
+      # Timestamp when the
+      # generation process ran
+      timestamp:
+        $.grunt.template.today()
+
+    # Merge in the JadeFilters
+    if options.jadeFilters && typeof options.jadeFilters is 'object'
+      for filter, func of options.jadeFilters when typeof func is 'function'
+        @jade.filters[filter] = func.bind(@jadeData)
+
+    # Declare the JadeOptions
     @jadeOptions =
       compileDebug: options.debug
-      filename: args['file'].path
       pretty: options.pretty
+      filename: file.path
+
+    # Run the JadeInit function if there is one
+    if options.jadeInit && typeof options.jadeInit is 'function'
+      options.jadeInit.call(@jadeData, file, dest)
