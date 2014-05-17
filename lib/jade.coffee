@@ -55,6 +55,9 @@ module.exports = $ = class Jade
       timestamp:
         $.grunt.template.today()
 
+      # File format if one was applied
+      format: @jadeData['format!'] || null
+
     # Merge in the JadeFilters
     if options.jadeFilters && typeof options.jadeFilters is 'object'
       for filter, func of options.jadeFilters when typeof func is 'function'
