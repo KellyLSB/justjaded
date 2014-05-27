@@ -54,6 +54,9 @@ module.exports = (grunt) ->
     # Resolve the asset dir location
     options.assetDir = File.resolve(options.assetDir, options.buildDir)
 
+    # Read the source files with Grunt
+    options.gruntReadSourceFiles = true
+
     # Create a new Task Helper
     task = new GruntTaskHelper(@, options)
 
