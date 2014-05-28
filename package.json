@@ -1,6 +1,6 @@
 {
   "name": "justjaded",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Static Site Generator",
   "repository": "http://github.com/KellyLSB/JustJaded.git",
   "main": "index.coffee",
@@ -10,13 +10,14 @@
   "author": "Kelly Becker",
   "license": "MIT",
   "dependencies": {
-    "glob": "^3.2.9",
-    "jade": "^1.3.1",
-    "jade-glob-include": "^1.0.1",
-    "js-yaml": "^3.0.2",
+    "chalk": "^0.4.0",
     "coffee-script": "^1.7.1",
     "compass": "^0.1.0",
-    "chalk": "^0.4.0",
-    "grunt": "^0.4.4"
+    "glob": "^3.2.9",
+    "grunt": "^0.4.4",
+    "grunt-tusks": "^0.5.1",
+    "jade": "^1.3.1",
+    "jade-glob-include": "^1.0.1",
+    "js-yaml": "^3.0.2"
   }
 }

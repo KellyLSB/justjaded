@@ -5,12 +5,12 @@
 # Licensed under the MIT license.
 'use strict'
 
-# Node Lib.
-Path = require('path')
-Fs   = require('fs')
 
-# Required Lib.
+# Required Libraries
+Fs   = require('fs')
+Path = require('path')
 Glob = require('glob')
+
 
 $ = class YamlGlobHelpers
 
@@ -23,8 +23,9 @@ $ = class YamlGlobHelpers
     pattern = Path.relative(process.cwd(), pattern)
     pattern = Path.normalize(pattern)
 
-    Glob.sync(pattern).filter (f) =>
+    Glob.sync(pattern).filter (f) ->
       f.match(/\.y[a]{0,1}ml$/) && Fs.existsSync(f)
+
 
 module.exports = class YamlGlob
 

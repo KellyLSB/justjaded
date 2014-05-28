@@ -5,14 +5,15 @@
 # Licensed under the MIT license.
 'use strict'
 
+
 module.exports = class YamlIncludes
 
   @resolveIncludes: (data, parent) ->
     for key, value of data
-      if typeof value is 'object'
-        data[key] = @resolveIncludes(value, parent)
+      data[key] = if typeof value is 'object'
+        @resolveIncludes(value, parent)
       else if typeof value is 'string' && \
-              match = value.match(/^include\ (.*)$/)
-        data[key] = @loadGlob(match[1], parent)
+          match = value.match(/^include\ (.*)$/)
+        @loadGlob(match[1], parent)
 
     return data

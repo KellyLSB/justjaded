@@ -5,6 +5,7 @@
 # Licensed under the MIT license.
 'use strict'
 
+
 module.exports = class YamlTrim
 
   @resolveTrim: (data, parent) ->
